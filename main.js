@@ -12,7 +12,7 @@ function multiply(a, b) {
 
 function divide(a, b) {
   if (!b) {
-    return 'ERROR';
+    return null;
   }
   return Math.round((a / b) * 100) / 100;
 }
@@ -41,9 +41,14 @@ function operatorPress(e) {
   } else {
     displayNums = display.innerText.split(currOperator);
     secondNum = parseInt(displayNums[displayNums.length - 1]);
+    console.log(firstNum, secondNum);
     firstNum = operate(operators[currOperator], firstNum, secondNum);
-    currOperator = e.currentTarget.innerText;
-    display.innerText = firstNum.toString() + currOperator;
+    if (!firstNum) {
+      errorDisplay();
+    } else {
+      currOperator = e.currentTarget.innerText;
+      display.innerText = firstNum.toString() + currOperator;
+    }
   }
 }
 
@@ -59,11 +64,17 @@ function equalPress() {
   secondNum = parseInt(displayNums[displayNums.length - 1]);
   if (secondNum) {
     firstNum = operate(operators[currOperator], firstNum, secondNum);
+  } else if (secondNum === 0 && currOperator === '/') {
+    errorDisplay();
   }
   currOperator = null;
   display.innerText = firstNum.toString();
 }
 
+function errorDisplay() {
+  alert('Cannot Divide by 0! Resetting Calculator!');
+  clearDisplay();
+}
 let firstNum;
 let secondNum;
 let currOperator;
