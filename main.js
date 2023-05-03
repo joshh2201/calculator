@@ -24,8 +24,11 @@ function operate(operator, a, b) {
 function updateDisplay(val) {
   if (display.innerText === '0') {
     display.innerText = val;
-  } else {
+  } else if (val !== '.' || !isDecimal) {
     display.innerText = display.innerText.concat(val);
+    if (val === '.') {
+      isDecimal = true;
+    }
   }
 }
 
@@ -36,11 +39,11 @@ function numberPress(e) {
 function operatorPress(e) {
   if (!currOperator) {
     currOperator = e.currentTarget.innerText;
-    firstNum = parseInt(display.innerText);
+    firstNum = parseFloat(display.innerText);
     updateDisplay(currOperator);
   } else {
     displayNums = display.innerText.split(currOperator);
-    secondNum = parseInt(displayNums[displayNums.length - 1]);
+    secondNum = parseFloat(displayNums[displayNums.length - 1]);
     console.log(firstNum, secondNum);
     firstNum = operate(operators[currOperator], firstNum, secondNum);
     if (!firstNum) {
@@ -61,7 +64,7 @@ function clearDisplay() {
 
 function equalPress() {
   displayNums = display.innerText.split(currOperator);
-  secondNum = parseInt(displayNums[displayNums.length - 1]);
+  secondNum = parseFloat(displayNums[displayNums.length - 1]);
   if (secondNum) {
     firstNum = operate(operators[currOperator], firstNum, secondNum);
   } else if (secondNum === 0 && currOperator === '/') {
@@ -78,6 +81,7 @@ function errorDisplay() {
 let firstNum;
 let secondNum;
 let currOperator;
+let isDecimal;
 
 const display = document.querySelector('.display');
 display.innerText = '0';
