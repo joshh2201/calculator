@@ -14,7 +14,7 @@ function divide(a, b) {
   if (!b) {
     return 'ERROR';
   }
-  return a / b;
+  return Math.round((a / b) * 100) / 100;
 }
 
 function operate(operator, a, b) {
@@ -54,6 +54,16 @@ function clearDisplay() {
   display.innerText = '0';
 }
 
+function equalPress() {
+  displayNums = display.innerText.split(currOperator);
+  secondNum = parseInt(displayNums[displayNums.length - 1]);
+  if (secondNum) {
+    firstNum = operate(operators[currOperator], firstNum, secondNum);
+  }
+  currOperator = null;
+  display.innerText = firstNum.toString();
+}
+
 let firstNum;
 let secondNum;
 let currOperator;
@@ -74,3 +84,6 @@ const operators = { '+': add, '-': subtract, x: multiply, '/': divide };
 
 const clearButton = document.querySelector('.clear');
 clearButton.addEventListener('click', clearDisplay);
+
+const equalButton = document.querySelector('.equal');
+equalButton.addEventListener('click', equalPress);
