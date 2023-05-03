@@ -22,7 +22,6 @@ function operate(operator, a, b) {
 }
 
 function updateDisplay(val) {
-  const display = document.querySelector('.display');
   if (display.innerText === '0') {
     display.innerText = val;
   } else {
@@ -35,7 +34,6 @@ function numberPress(e) {
 }
 
 function operatorPress(e) {
-  const display = document.querySelector('.display');
   if (!currOperator) {
     currOperator = e.currentTarget.innerText;
     firstNum = parseInt(display.innerText);
@@ -48,6 +46,14 @@ function operatorPress(e) {
     display.innerText = firstNum.toString() + currOperator;
   }
 }
+
+function clearDisplay() {
+  firstNum = null;
+  secondNum = null;
+  currOperator = null;
+  display.innerText = '0';
+}
+
 let firstNum;
 let secondNum;
 let currOperator;
@@ -64,4 +70,7 @@ const operatorButtons = document.querySelectorAll('.operator');
 operatorButtons.forEach((button) =>
   button.addEventListener('click', operatorPress)
 );
-operators = { '+': add, '-': subtract, x: multiply, '/': divide };
+const operators = { '+': add, '-': subtract, x: multiply, '/': divide };
+
+const clearButton = document.querySelector('.clear');
+clearButton.addEventListener('click', clearDisplay);
