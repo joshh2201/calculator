@@ -78,6 +78,20 @@ function errorDisplay() {
   alert('Cannot Divide by 0! Resetting Calculator!');
   clearDisplay();
 }
+
+function deleteDisplay() {
+  let lastChar = display.innerText.slice(-1);
+  console.log(lastChar);
+  if (!(display.innerText.length - 1)) {
+    display.innerText = '0';
+  } else {
+    if (Object.keys(operators).includes(lastChar)) {
+      currOperator = null;
+      firstNum = null;
+    }
+    display.innerText = display.innerText.slice(0, -1);
+  }
+}
 let firstNum;
 let secondNum;
 let currOperator;
@@ -102,3 +116,6 @@ clearButton.addEventListener('click', clearDisplay);
 
 const equalButton = document.querySelector('.equal');
 equalButton.addEventListener('click', equalPress);
+
+const deleteButton = document.querySelector('.delete');
+deleteButton.addEventListener('click', deleteDisplay);
