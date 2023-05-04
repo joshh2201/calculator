@@ -88,6 +88,8 @@ function deleteDisplay() {
     if (Object.keys(operators).includes(lastChar)) {
       currOperator = null;
       firstNum = null;
+    } else if (lastChar === '.') {
+      isDecimal = false;
     }
     display.innerText = display.innerText.slice(0, -1);
   }
